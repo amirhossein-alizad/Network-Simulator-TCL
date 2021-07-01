@@ -21,10 +21,16 @@ if { $argc != 1 } {
 #Create a simulator object
 set ns [new Simulator]
 
+set path1 "outFiles/"
+file mkdir $path1 ;
+
+set path "csvFiles/"
+file mkdir $path ;
+
 #Open the nam file congestion.nam and the variable-trace file congestion.tr
-set tf [open out.tr w]
+set tf [open outFiles/out.tr w]
 $ns trace-all $tf
-set nf [open out.nam w]
+set nf [open outFiles/out.nam w]
 $ns namtrace-all $nf
 
 #Define a 'finish' procedure
@@ -33,7 +39,7 @@ proc finish {} {
     $ns flush-trace
     close $nf
     close $tf
-    exec nam out.nam
+    exec nam outFiles/out.nam
     exit 0
 }
 
@@ -123,8 +129,8 @@ proc plotCwnd {tcpSource outfile} {
    $ns at [expr $now + 1] "plotCwnd $tcpSource $outfile"
 }
 
-set cwndTcp1File [open "cwnd1.csv" w]
-set cwndTcp2File [open "cwnd2.csv" w]
+set cwndTcp1File [open "csvFiles/cwnd1.csv" w]
+set cwndTcp2File [open "csvFiles/cwnd2.csv" w]
 puts  $cwndTcp1File  "time,cwnd"
 puts  $cwndTcp2File  "time,cwnd"
 $ns at 0.0  "plotCwnd $tcp1 $cwndTcp1File"
@@ -140,8 +146,8 @@ proc plotGoodput {tcpSource prevAck outfile} {
    $ns at [expr $now + 1] "plotGoodput $tcpSource $ack $outfile"
 }
 
-set goodputTcp1File [open "goodput1.csv" w]
-set goodputTcp2File [open "goodput2.csv" w]
+set goodputTcp1File [open "csvFiles/goodput1.csv" w]
+set goodputTcp2File [open "csvFiles/goodput2.csv" w]
 puts  $goodputTcp1File  "time,goodput"
 puts  $goodputTcp2File  "time,goodput"
 $ns at 0.0  "plotGoodput $tcp1 0 $goodputTcp1File"
@@ -157,8 +163,8 @@ proc plotRTT {tcpSource outfile} {
    $ns at [expr $now + 1] "plotRTT $tcpSource $outfile"
 }
 
-set rttTcp1File [open "rtt1.csv" w]
-set rttTcp2File [open "rtt2.csv" w]
+set rttTcp1File [open "csvFiles/rtt1.csv" w]
+set rttTcp2File [open "csvFiles/rctt2.csv" w]
 puts  $rttTcp1File  "time,rtt"
 puts  $rttTcp2File  "time,rtt"
 $ns at 0.0  "plotRTT $tcp1 $rttTcp1File"
