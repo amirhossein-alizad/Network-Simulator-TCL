@@ -2,14 +2,17 @@ if { $argc != 1 } {
    puts "The main.tcl script requires one TCP algorithm to be inputed. \n For example, 'ns main.tcl newReno' \n Please try again."
     return 0;
 } else {
-    set TCP "TCP/Linux"
+    
    if { [lindex $argv 0] == "cubic" } {
+     set TCP "TCP/Linux"
     set alg "cubic"
     } else {
       if { [lindex $argv 0] == "yeah" } {
+        set TCP "TCP/Linux"
         set alg "yeah"
         } else {
             if { [lindex $argv 0] == "Reno" } {
+              set TCP "TCP/Reno"
             set alg "Reno"
         } else {
             puts "The main.tcl script requires one TCP algorithm to be inputed.\nFor example, 'ns main.tcl newReno'\nPlease try again."
@@ -81,11 +84,14 @@ set tcp1 [new Agent/$TCP]
 if {$alg != "Reno"} {
   $ns at 0 "$tcp1 select_ca $alg"
 }
-$tcp1 set class_ 2
 $tcp1 set ttl_ 64
 $tcp1 set fid_ 1
 $tcp1 set windowInit_ 8
-$tcp1 set window_ 1000
+if {$alg != "Reno"} {
+  $tcp1 set window_ 1000
+} else {
+  $tcp1 set window_ 8000
+}
 $ns attach-agent $n1 $tcp1
 
 set sink1 [new Agent/TCPSink]
@@ -96,11 +102,14 @@ set tcp2 [new Agent/$TCP]
 if {$alg != "Reno"} {
   $ns at 0 "$tcp1 select_ca $alg"
 }
-$tcp2 set class_ 2
 $tcp2 set ttl_ 64
 $tcp2 set fid_ 2
 $tcp2 set windowInit_ 8
-$tcp2 set window_ 1000
+if {$alg != "Reno"} {
+  $tcp2 set window_ 1000
+} else {
+  $tcp2 set window_ 8000
+}
 $ns attach-agent $n2 $tcp2
 
 set sink2 [new Agent/TCPSink]
