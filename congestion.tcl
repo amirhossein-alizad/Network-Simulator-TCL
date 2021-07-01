@@ -84,6 +84,8 @@ if {$alg != "Reno"} {
 $tcp1 set class_ 2
 $tcp1 set ttl_ 64
 $tcp1 set fid_ 1
+$tcp1 set windowInit_ 8
+$tcp1 set window_ 1000
 $ns attach-agent $n1 $tcp1
 
 set sink1 [new Agent/TCPSink]
@@ -97,6 +99,8 @@ if {$alg != "Reno"} {
 $tcp2 set class_ 2
 $tcp2 set ttl_ 64
 $tcp2 set fid_ 2
+$tcp2 set windowInit_ 8
+$tcp2 set window_ 1000
 $ns attach-agent $n2 $tcp2
 
 set sink2 [new Agent/TCPSink]
