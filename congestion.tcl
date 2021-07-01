@@ -39,7 +39,7 @@ proc finish {} {
     $ns flush-trace
     close $nf
     close $tf
-    exec nam outFiles/out.nam
+    exec nam outFiles/out.nam &
     exit 0
 }
 
@@ -78,7 +78,7 @@ $ns duplex-link-op $n4 $n6 orient right-down
 $ns duplex-link-op $n3 $n4 queuePos 0.5
 
 set tcp1 [new Agent/$TCP]
-if {$alg != "ًReno"} {
+if {$alg != "Reno"} {
   $ns at 0 "$tcp1 select_ca $alg"
 }
 $tcp1 set class_ 2
