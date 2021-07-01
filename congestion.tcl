@@ -164,7 +164,7 @@ proc plotRTT {tcpSource outfile} {
 }
 
 set rttTcp1File [open "csvFiles/rtt1.csv" w]
-set rttTcp2File [open "csvFiles/rctt2.csv" w]
+set rttTcp2File [open "csvFiles/rtt2.csv" w]
 puts  $rttTcp1File  "time,rtt"
 puts  $rttTcp2File  "time,rtt"
 $ns at 0.0  "plotRTT $tcp1 $rttTcp1File"
